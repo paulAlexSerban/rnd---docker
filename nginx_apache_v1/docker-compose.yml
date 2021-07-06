@@ -1,0 +1,18 @@
+version: '3'
+
+# uses sample HTML static site from https://startbootstrap.com/themes/agency/
+
+services:
+  # nginx web proxy  
+  proxy:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - '80:80' # expose 80 on host and sent to 80 in container
+
+  # apache web server     
+  web:
+    image: httpd # this will use httpd:latest
+    volumes:
+      - ./html:/usr/local/apache2/htdocs/
