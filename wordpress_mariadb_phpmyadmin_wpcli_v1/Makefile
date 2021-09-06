@@ -1,32 +1,30 @@
 include .env
 # Start containers, no theme files will be included
 start:
-	docker-compose up -d --build
+	docker-compose -f ./docker/docker-compose.yml up -d --build
 
 febuild: 
 	@sudo npm run build
 
 build: febuild
-	@sh ./shell/get_src_files.sh
+	@bash ./shell/get_src_files.sh
 
-down: bkp
-	docker-compose down -v 
 
-bkp: 
-	@sudo sh ./shell/backup_plugins.sh
-	@sudo sh ./shell/backup_uploads.sh
-	 
 bkp-plugins:
-	@sudo sh ./shell/backup_plugins.sh
+	@sudo bash ./shell/backup_plugins.sh
 
 bkp-uploads:
-	@sudo sh ./shell/backup_uploads.sh
+	@sudo bash ./shell/backup_uploads.sh
 
-configure:
-	docker-compose -f docker-compose.yml -f ./docker/config/wp-auto-config.yml run --rm .wp-auto-config
+bkp: 
+	@sudo bash ./shell/backup_plugins.sh
+	@sudo bash ./shell/backup_uploads.sh
+
+down: bkp
+	docker-compose -f ./docker/docker-compose.yml down -v 
 
 install: start
-	docker-compose -f docker-compose.yml -f ./docker/config/wp-auto-config.yml run --rm wp-auto-config && make build
+	docker-compose -f ./docker/docker-compose.yml -f ./docker/config/wp-auto-config.yml run --rm wp-auto-config
 
 clean: down
 	@echo "💥 Removing related folders/files..."
