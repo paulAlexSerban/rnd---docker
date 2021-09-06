@@ -23,8 +23,11 @@ bkp:
 down: bkp
 	docker-compose -f ./docker/docker-compose.yml down -v 
 
-install: start
+deploy: start
 	docker-compose -f ./docker/docker-compose.yml -f ./docker/config/wp-auto-config.yml run --rm wp-auto-config
+
+install: deploy
+	@sudo npm install
 
 clean: down
 	@echo "💥 Removing related folders/files..."
