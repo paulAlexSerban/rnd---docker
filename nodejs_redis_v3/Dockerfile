@@ -1,14 +1,16 @@
 # specify the base image
 FROM node:alpine
 
-# starting from n15 of Node you need to ad the next line - this will solve `npm ERR! could not detect node from path or package`
+# starting from v15 of Node you need to ad the next line - this will solve `npm ERR! could not detect node from path or package`
 WORKDIR /usr/app
 
-# copy everything from the curent working directory
-COPY ./ ./
+COPY package*.json .
 
 # install some dependencies
 RUN npm install
+
+# copy everything from the curent working directory
+COPY ./ ./
 
 # default command
 CMD ["npm", "start"]
