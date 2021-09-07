@@ -9,6 +9,7 @@ COPY package*.json .
 # install some dependencies
 RUN npm install
 
+
 # copy everything from the curent working directory
 COPY ./ ./
 
