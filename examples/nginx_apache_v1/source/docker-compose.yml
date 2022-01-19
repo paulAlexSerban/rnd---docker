@@ -15,4 +15,4 @@ services:
   web:
     image: httpd # this will use httpd:latest
     volumes:
-      - ./docs:/usr/local/apache2/htdocs/
+      - ./dist:/usr/local/apache2/htdocs/
